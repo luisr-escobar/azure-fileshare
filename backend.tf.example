@@ -1,0 +1,8 @@
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-tfstate-fileshare"
+    storage_account_name = "<unique_storage_name>"
+    container_name       = "tfstate"
+    key                  = "fileshare.terraform.tfstate"
+  }
+}

@@ -1,0 +1,30 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+.terraform/
+.terraform.lock.hcl
+
+# Certificates
+*.pfx
+*.cer
+*.crt
+*.key
+
+# Azure
+.azure/
+
+# Editors
+.vscode/
+.idea/
+
+# Environment Variables
+.env
+
+# OS
+Thumbs.db
+Desktop.ini
