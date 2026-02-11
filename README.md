@@ -21,4 +21,26 @@ If you only have an **Office 365 Subscription**, you already have "Active Direct
 2.  **Terraform**: [Install Terraform](https://developer.hashicorp.com/terraform/downloads).
 3.  **Azure CLI**: [Install Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli).
 
-For more information, see [INSTRUCTIONS.md](INSTRUCTIONS.md).
+## Security & Authentication: How does it work?
+
+### Layer 1: The Tunnel (Device Security)
+The VPN uses **Certificate-Based Authentication**, not a username/password. This is stronger because it verifies the **Device**, not just the user.
+
+1.  **The Server (Azure)**: Has the "Root Certificate" (Public Key). It only accepts connections from devices that can prove they have a valid "Client Certificate" signed by this root.
+2.  **The Client (Your PC)**: Has the `P2SChildCert.pfx` installed. This act as a digital "Key Card".
+3.  **Security**: If an employee leaves or loses their laptop, you can "Revoke" their certificate in Azure, instantly blocking their VPN access. A hacker cannot connect even with a username/password unless they steal this specific file.
+
+### Layer 2: The File Share (User Identity)
+Once the tunnel is established, the user is on the private network (`10.0.x.x`), but they still cannot access files.
+
+1.  **Kerberos**: When you run `net use`, Windows silently sends your Office 365 "Ticket" to the storage account.
+2.  **RBAC**: Azure checks if your specific user (e.g., `luis@company.com`) has the "SMB Contributor" role.
+3.  **Result**: You get access based on *who you are*, controlled centrally in your Office 365 admin portal.
+
+## Architecture
+*   **VNet**: 10.0.0.0/16
+*   **GatewaySubnet**: 10.0.1.0/24
+*   **StorageSubnet**: 10.0.2.0/24
+*   **VPN Clients**: 172.16.201.0/24
+
+For next steps, see [INSTRUCTIONS.md](INSTRUCTIONS.md).
