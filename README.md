@@ -44,3 +44,6 @@ Once the tunnel is established, the user is on the private network (`10.0.x.x`),
 *   **VPN Clients**: 172.16.201.0/24
 
 For next steps, see [INSTRUCTIONS.md](INSTRUCTIONS.md).
+
+> **Note**: Before running Terraform, ensure you have selected your Azure Subscription:
+> `az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"`

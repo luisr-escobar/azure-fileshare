@@ -46,9 +46,26 @@ Login to Azure and deploy:
 
 ```powershell
 az login
+
+# 1. List your subscriptions to find the "Subscription ID"
+az account list --output table
+
+# 2. Set the active subscription (Replace xxxxx with your ID)
+az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# 3. Verify it is set
+az account show
+
 terraform init
 terraform apply
 ```
+
+
+> **Troubleshooting**: If you still see `Error: building account`, run this in PowerShell to force Terraform to use your subscription:
+> ```powershell
+> $env:ARM_SUBSCRIPTION_ID = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+> # (Replace x's with your ID from 'az account list')
+> ```
 
 > ⚠️ **IMPORTANT: The "Coffee Break" Warning** ☕
 > The creation of the **VPN Gateway** (`azurerm_virtual_network_gateway`) takes **45 to 60 minutes** to complete.
@@ -82,4 +99,26 @@ Since this solution uses a Private Endpoint without a Private DNS Server (to sav
     $saName = terraform output -raw storage_account_name
     net use Z: \\$saName.file.core.windows.net\cad-projects /persistent:yes
     ```
+
+## 8. Cleanup / Uninstall
+To completely remove everything (stop billing and clean your PC):
+
+### A. Destroy Azure Resources
+This stops all billing.
+```powershell
+terraform destroy
+```
+*   Type `yes` when prompted.
+
+### B. Remove Local Configs
+1.  **VPN Client**: Go to **Settings** -> **Network & Internet** -> **VPN** -> Remove "vnet-fileshare".
+2.  **Certificates**:
+    *   Open Start -> Run -> `certmgr.msc`.
+    *   Go to **Personal** -> **Certificates**.
+    *   Delete `P2SChildCert`.
+    *   (If you installed the Root) Go to **Trusted Root Certification Authorities** -> **Certificates** -> Delete `P2SRootCert`.
+3.  **Hosts File**:
+    *   Open `C:\Windows\System32\drivers\etc\hosts` as Admin.
+    *   Remove the line: `10.0.x.x <storage>.file.core.windows.net`.
+4.  **Files**: Delete the folder where you cloned this repo (unless you want to keep the code).
     
