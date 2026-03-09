@@ -20,6 +20,23 @@ If you only have an **Office 365 Subscription**, you already have "Active Direct
 1.  **Azure Subscription**: (Created in step above).
 2.  **Terraform**: [Install Terraform](https://developer.hashicorp.com/terraform/downloads).
 3.  **Azure CLI**: [Install Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli).
+4.  **Git**: [Install Git](https://git-scm.com/downloads) or [GitHub Desktop](https://desktop.github.com/).
+
+## Getting the Code
+Before running any commands, you need to download this project to your local machine.
+
+**Option 1: Using GitHub Desktop (Recommended for beginners)**
+1. Open [GitHub Desktop](https://desktop.github.com/).
+2. Go to **File** > **Clone repository...**
+3. Select the **URL** tab and paste the URL of this repository.
+4. Choose a local path and click **Clone**.
+
+**Option 2: Using Git CLI**
+Open PowerShell or your terminal and run:
+```bash
+git clone <REPOSITORY_URL>
+cd fileshare
+```
 
 ## Security & Authentication: How does it work?
 

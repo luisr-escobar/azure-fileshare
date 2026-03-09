@@ -100,6 +100,26 @@ Since this solution uses a Private Endpoint without a Private DNS Server (to sav
     net use Z: \\$saName.file.core.windows.net\cad-projects /persistent:yes
     ```
 
+## 7. Setup for Additional Devices
+Once the initial infrastructure is deployed, you do not need to run Terraform again. To connect a new PC or employee laptop to the file share, follow these steps:
+
+1. **Install the Client Certificate**:
+    * Securely transfer the `P2SChildCert.pfx` file (generated earlier in Step 1) to the new device.
+    * Double-click the file to install it into the **Current User** certificate store.
+2. **Download and Install the VPN Client**:
+    * An Azure Administrator must log into the Azure Portal.
+    * Navigate to the **Virtual Network Gateway** -> **Point-to-site configuration** and click **Download VPN client**.
+    * Install the downloaded VPN client on the new device.
+3. **Configure DNS (Hosts File)**:
+    * Copy the `configure_dns.ps1` script to the new device and run it as **Administrator**, OR manually add the mapping to `C:\Windows\System32\drivers\etc\hosts`:
+      `10.0.x.x <storage_account_name>.file.core.windows.net`
+4. **Connect and Map the Drive**:
+    * Connect to the VPN from the Windows taskbar.
+    * Map the network drive using your Storage Account name:
+      ```powershell
+      net use Z: \\<storage_account_name>.file.core.windows.net\cad-projects /persistent:yes
+      ```
+
 ## 8. Cleanup / Uninstall
 To completely remove everything (stop billing and clean your PC):
 
