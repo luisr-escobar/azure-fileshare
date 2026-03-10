@@ -49,8 +49,8 @@ resource "azurerm_public_ip" "vpn_pip" {
   name                = "pip-vpn-gateway"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Dynamic"
+  sku                 = "Basic"
 }
 
 resource "azurerm_virtual_network_gateway" "vpn" {
@@ -63,7 +63,7 @@ resource "azurerm_virtual_network_gateway" "vpn" {
 
   active_active = false
   enable_bgp    = false
-  sku           = "VpnGw1"
+  sku           = "Basic"
 
   ip_configuration {
     name                          = "vnetGatewayConfig"
