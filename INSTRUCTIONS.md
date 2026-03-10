@@ -52,20 +52,14 @@ az account list --output table
 
 # 2. Set the active subscription (Replace xxxxx with your ID)
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+$env:ARM_SUBSCRIPTION_ID = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 # 3. Verify it is set
 az account show
 
-terraform init
 terraform apply
 ```
 
-
-> **Troubleshooting**: If you still see `Error: building account`, run this in PowerShell to force Terraform to use your subscription:
-> ```powershell
-> $env:ARM_SUBSCRIPTION_ID = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-> # (Replace x's with your ID from 'az account list')
-> ```
 
 > ⚠️ **IMPORTANT: The "Coffee Break" Warning** ☕
 > The creation of the **VPN Gateway** (`azurerm_virtual_network_gateway`) takes **45 to 60 minutes** to complete.
